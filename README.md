@@ -22,11 +22,11 @@ Books are life-changing. They have the power to enlighten, educate, entertain, h
 ## Estimates
 <!-- See below -->
 
-Name of feature: Front End intial setup
+Name of feature: Book Component (card 3)
 
 Estimate of time needed to complete: 1 hour
 
-Start time: 4:35PM
+Start time: 6pm
 
 Finish time: _____
 
