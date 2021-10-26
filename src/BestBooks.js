@@ -32,10 +32,9 @@ class BestBooks extends React.Component {
       <>
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
 
-        <BookCarousel book={this.state.books}/>
 
         {this.state.books.length ? (
-          <p>Book Carousel coming soon</p>
+          <BookCarousel book={this.state.books}/>
         ) : (
           <h3>No Books Found :(</h3>
         )}
