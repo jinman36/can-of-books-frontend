@@ -18,7 +18,7 @@ export default class LoginButton extends Component {
     return (
       <>
         {this.state.showLoginForm ? <LoginForm /> : <Button onClick={this.onClick}>Login</Button>}
-      </>
+        <Button></Button>      </>
     )
   }
 }
