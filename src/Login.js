@@ -1,7 +1,7 @@
 import React from 'react';
 // import Card from 'react-bootstrap/Card';
 import './Login.css';
-import LoginButton from './LoginButton'
+// import LoginButton from './LoginButton'
 
 class Login extends React.Component {
   render() {
