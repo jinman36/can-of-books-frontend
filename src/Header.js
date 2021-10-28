@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar, NavItem } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import './Header.css';
+import LogOutButton from './LogoutButton'
 
 class Header extends React.Component {
   render() {
@@ -18,6 +19,7 @@ class Header extends React.Component {
         className="nav-link">Profile</Link></NavItem>
         }
         {/* TODO: if the user is logged in, render the `LogoutButton` */}
+        {this.props.user ? <LogOutButton onLogout={this.props.onLogout}/> : ''}
       </Navbar>
     )
   }
