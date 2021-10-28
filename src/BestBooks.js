@@ -25,7 +25,7 @@ class BestBooks extends React.Component {
 
 
   render() {
-    console.log(this.state)
+    // console.log(this.state)
 
     /* TODO: render us  er's books in a Carousel */
     return (

@@ -16,7 +16,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: [],
+      user: false
     }
   }
 
@@ -33,6 +33,7 @@ class App extends React.Component {
   }
 
   render() {
+    // console.log(this.state)
     return (
       <>
         <Router>
@@ -40,11 +41,12 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               {/* TODO: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
-              {this.state.user ? <BestBooks /> : <LoginButton/>}
+              {this.state.user ? <BestBooks /> : <LoginButton loginHandler={this.loginHandler}/>
+              }
             </Route>
             <Route exact path="/profile">
               {/* TODO: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
-              <Profile/>
+              <Profile user={this.state.user}/>
             </Route>
             {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
           </Switch>
