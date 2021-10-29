@@ -2,6 +2,8 @@
 
 **Author**: Joshua Huston & Jeff Inman
 **Version**: 1.0.0
+**Netlify Deployed Link** (Can Of Books - Netlify)[https://can-of-books-jj.netlify.app/]
+**HeroKu Deployed Link** (Can Of Books - HeroKu)[https://huston-can-of-books-backend.herokuapp.com/]
 
 ## Overview
 
