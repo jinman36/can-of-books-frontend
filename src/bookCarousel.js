@@ -6,7 +6,6 @@ class bookCarousel extends React.Component {
 
     return (
       <>
-        <h2>My Favorite Books</h2>
         {this.props.book.length > 0 ?
           <Carousel className="d-block mx-auto w-25 m-4 border border-info">
             {this.props.book.map((book) => (
@@ -19,12 +18,11 @@ class bookCarousel extends React.Component {
                 <Carousel.Caption>
                   <h3>{book.title}</h3>
                   <p>{book.description}</p>
-                </Carousel.Caption>
                 <Button variant="danger" className='d-block mx-auto' type="submit" onClick={() => { this.props.handleDelete(book._id); }}>
                   DELETE
                 </Button>
+                </Carousel.Caption>
               </Carousel.Item>
-
             ))}
           </Carousel>
           : <p>Sorry, no books available.</p>
