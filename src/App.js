@@ -10,6 +10,7 @@ import {
 import BestBooks from './BestBooks';
 import Profile from './Profile';
 import LoginButton from './LoginButton'
+import AddBook from './AddBook';
 
 class App extends React.Component {
 
@@ -47,6 +48,10 @@ class App extends React.Component {
             <Route exact path="/profile">
               {/* TODO: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
               <Profile user={this.state.user}/>
+            </Route>
+            <Route exact path="/create">
+              {/* TODO: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
+              <AddBook />
             </Route>
             {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
           </Switch>
