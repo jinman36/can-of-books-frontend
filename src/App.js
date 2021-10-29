@@ -57,6 +57,7 @@ class App extends React.Component {
     this.setState({
       newBook: newBookResponse.data
     })
+      .catch(err => console.log(`Error: ${err.message}`))
   };
 
   HandleSubmit = async (e) => {
@@ -68,6 +69,7 @@ class App extends React.Component {
     // this.setState({
     //   newBook: newBookResponse.data
     // })
+
     let addedBook = {
       title: e.target.title.value,
       description: e.target.description.value,
@@ -75,11 +77,14 @@ class App extends React.Component {
       email: e.target.email.value,
     }
     let URL = `${process.env.REACT_APP_SERVER}/allBooks`
+
     let postRes = await axios.post(URL, addedBook)
+
 
     this.setState({
       books: [...this.state.books, postRes.data]
     })
+      .catch(err => console.log(`Error: ${err.message}`))
   }
 
   componentDidMount() {
