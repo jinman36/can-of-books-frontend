@@ -1,8 +1,8 @@
-import { Component } from "react";
+import React from "react";
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/Button";
 
-class LoginForm extends Component {
+class LoginForm extends React.Component {
   onHandleSubmit = (e) => {
     e.preventDefault();
     console.log(e.target.email.value)
@@ -16,7 +16,7 @@ class LoginForm extends Component {
     render() {
       return (
         <Form onSubmit={this.onHandleSubmit}>
-          <Form.Group controlId="formBasicEmail">
+          <Form.Group>
             <Form.Label>Email address</Form.Label>
             <Form.Control type="email" id='email' placeholder="Enter email" />
             <Form.Text className="text-muted">
@@ -24,7 +24,7 @@ class LoginForm extends Component {
             </Form.Text>
           </Form.Group>
 
-          <Button variant="primary" type="submit" >
+          <Button variant="info" className='d-block mx-auto' type="submit" >
             Submit
           </Button>
         </Form>

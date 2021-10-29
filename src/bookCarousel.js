@@ -7,7 +7,7 @@ class bookCarousel extends React.Component {
       <>
         <h2>My Favorite Books</h2>
         {this.props.book.length > 0 ?
-          <Carousel className="d-block w-25">
+          <Carousel className="d-block mx-auto w-25 m-4 border border-info">
             {this.props.book.map((book) => (
               <Carousel.Item key={book._id}>
                 <img
