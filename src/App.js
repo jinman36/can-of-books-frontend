@@ -19,7 +19,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: false,
-      newBook: null,
+      newBook: {},
       books: []
     }
   }
@@ -52,12 +52,35 @@ class App extends React.Component {
   }
 
   // Post Not yet functional
-  handleUpdate = async (id, email) => {
-    const newBookResponse = await axios.post(`${process.env.REACT_APP_SERVER}/allBooks${id}${email}`);
+  handleUpdate = async (email) => {
+    const newBookResponse = await axios.post(`${process.env.REACT_APP_SERVER}/allBooks`);
     this.setState({
       newBook: newBookResponse.data
     })
   };
+
+  HandleSubmit = async (e) => {
+    e.preventDefault();
+    console.log('add new book clicked')
+    // const newBookResponse = await axios.post(`${process.env.REACT_APP_SERVER}/allBooks`, bookInfo);
+
+    // // right now we dont have anywhere that this data is going.
+    // this.setState({
+    //   newBook: newBookResponse.data
+    // })
+    let addedBook = {
+      title: e.target.title.value,
+      description: e.target.description.value,
+      status: e.target.status.value,
+      email: e.target.email.value,
+    }
+    let URL = `${process.env.REACT_APP_SERVER}/allBooks`
+    let postRes = await axios.post(URL, addedBook)
+
+    this.setState({
+      books: [...this.state.books, postRes.data]
+    })
+  }
 
   componentDidMount() {
     axios.get(`${process.env.REACT_APP_SERVER}/allBooks`)
@@ -71,8 +94,8 @@ class App extends React.Component {
 
 
   render() {
-    // console.log(this.state)
-    console.log(this.state.books)
+    console.log(this.state)
+    // console.log(this.state.new)
     return (
       <>
         <Router>
@@ -89,7 +112,7 @@ class App extends React.Component {
             </Route>
             <Route exact path="/create">
               {/* TODO: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
-              <AddBook />
+              <AddBook HandleSubmit={this.HandleSubmit} />
             </Route>
             {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
           </Switch>
