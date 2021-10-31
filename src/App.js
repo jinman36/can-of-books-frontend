@@ -12,18 +12,19 @@ import Profile from './Profile';
 import LoginButton from './LoginButton'
 import AddBook from './AddBook';
 import axios from 'axios';
+import UpdateBook from './UpdateBook.js'
 
 class App extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       user: false,
       newBook: {},
-      books: []
+      books: [],
+      upDatedObject: {},
+      showUpdatedForm: false
     }
   }
-
 
   loginHandler = (user) => {
     this.setState({
@@ -39,7 +40,7 @@ class App extends React.Component {
 
   // Lab 12 add in - function is passed down as state into BestBooks
   handleDelete = async (bookId) => {
-    console.log('bookId', bookId);
+    // console.log('bookId', bookId);
     let URL = `${process.env.REACT_APP_SERVER}/allBooks`;
     const deletedBook = await axios.delete(`${URL}/${bookId}`);
     console.log(deletedBook);
@@ -51,25 +52,9 @@ class App extends React.Component {
     this.setState({ books: filteredArr });
   }
 
-  // Post Not yet functional
-  handleUpdate = async (email) => {
-    const newBookResponse = await axios.post(`${process.env.REACT_APP_SERVER}/allBooks`);
-    this.setState({
-      newBook: newBookResponse.data
-    })
-      .catch(err => console.log(`Error: ${err.message}`))
-  };
-
   HandleSubmit = async (e) => {
     e.preventDefault();
     console.log('add new book clicked')
-    // const newBookResponse = await axios.post(`${process.env.REACT_APP_SERVER}/allBooks`, bookInfo);
-
-    // // right now we dont have anywhere that this data is going.
-    // this.setState({
-    //   newBook: newBookResponse.data
-    // })
-
     let addedBook = {
       title: e.target.title.value,
       description: e.target.description.value,
@@ -77,14 +62,11 @@ class App extends React.Component {
       email: e.target.email.value,
     }
     let URL = `${process.env.REACT_APP_SERVER}/allBooks`
-
     let postRes = await axios.post(URL, addedBook)
-
-
     this.setState({
       books: [...this.state.books, postRes.data]
     })
-      .catch(err => console.log(`Error: ${err.message}`))
+    // .catch(err => console.log(`Error: ${err.message}`))
   }
 
   componentDidMount() {
@@ -97,10 +79,36 @@ class App extends React.Component {
       .catch(err => console.log('error: ', err.message));
   }
 
+  updatedForm = (itemObj) => {
+    this.setState({ upDatedObject: itemObj, showUpdatedForm: true });
+  }
+
+  handleUpdate = async (itemObj) => {
+
+    let URL = `${process.env.REACT_APP_SERVER}/allBooks/${itemObj._id}`
+    console.log(`URL in handle update: ${URL}`)
+
+    let putObj = {
+      title: itemObj.title,
+      description: itemObj.description,
+      status: itemObj.status,
+      email: itemObj.email
+    }
+
+    console.log('put Obj', putObj)
+    let putReq = await axios.put(URL, putObj);
+    let putData = putReq.data;
+
+
+    let copyState = this.state.books.map((book, idx) => {
+      if (book._id === putData._id) return putData;
+      else { return book }
+    })
+    this.setState({ books: copyState, showUpdatedForm: false })
+  }
+
 
   render() {
-    console.log(this.state)
-    // console.log(this.state.new)
     return (
       <>
         <Router>
@@ -108,7 +116,12 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               {/* TODO: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
-              {this.state.user ? <BestBooks handleDelete={this.handleDelete} books={this.state.books} /> : <LoginButton loginHandler={this.loginHandler} />
+              {this.state.user ? <BestBooks
+                handleDelete={this.handleDelete}
+                books={this.state.books}
+                updatedForm={this.updatedForm}
+              />
+                : <LoginButton loginHandler={this.loginHandler} />
               }
             </Route>
             <Route exact path="/profile">
@@ -121,6 +134,11 @@ class App extends React.Component {
             </Route>
             {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
           </Switch>
+          {this.state.showUpdatedForm ?
+            <UpdateBook
+              handleUpdate={this.handleUpdate}
+              item={this.state.upDatedObject}
+              books={this.state.books} /> : ''}
           <Footer />
         </Router>
       </>

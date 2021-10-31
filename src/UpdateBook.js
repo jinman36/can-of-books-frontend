@@ -2,11 +2,28 @@ import React from "react";
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/Button";
 
-class AddBook extends React.Component {
+
+class UpdateBook extends React.Component {
+
+  handleUpdateSubmit = (e) => {
+    e.preventDefault();
+    console.log('add updated clicked')
+
+    let newObj = {
+      title: (e.target.title.value) ? e.target.title.value : this.props.item.title,
+      description: (e.target.description.value) ? e.target.description.value : this.props.item.description,
+      status: (e.target.status.value) ? e.target.status.value : this.props.item.status,
+      email: (e.target.email.value) ? e.target.email.value : this.props.item.email,
+      _id: this.props.item._id
+    }
+    this.props.handleUpdate(newObj)
+  }
+
   render() {
     return (
       <>
-        <Form className='m-3' onSubmit={this.props.HandleSubmit} id='newBook'>
+        <h1>Update Book Information</h1>
+        <Form className='m-3' onSubmit={this.handleUpdateSubmit} id='newBook'>
           <Form.Group>
             <Form.Label>Title</Form.Label>
             <Form.Control type="text" id='title' placeholder="Enter book title" />
@@ -32,11 +49,11 @@ class AddBook extends React.Component {
           </Form.Group>
 
           <Button variant="info" className='d-block mx-auto' type="submit" >
-            Add New Book
+            Update Book
           </Button>
         </Form>
       </>
     )
   }
 }
-export default AddBook;
+export default UpdateBook;
