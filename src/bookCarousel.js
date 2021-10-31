@@ -2,8 +2,12 @@ import React from 'react'
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
 class bookCarousel extends React.Component {
-  render() {
 
+  runHandleUpdate = () => {
+    this.props.updatedForm(this.props.book)
+  }
+
+  render() {
     return (
       <>
         {this.props.book.length > 0 ?
@@ -18,9 +22,14 @@ class bookCarousel extends React.Component {
                 <Carousel.Caption>
                   <h3>{book.title}</h3>
                   <p>{book.description}</p>
-                <Button variant="danger" className='d-block mx-auto' type="submit" onClick={() => { this.props.handleDelete(book._id); }}>
-                  DELETE
-                </Button>
+                  <Button variant="danger" className='d-block mx-auto' type="submit" onClick={() => { this.props.handleDelete(book._id); }}>
+                    DELETE
+                  </Button>
+                  <Button variant="info" type="submit" onClick={() => {
+                    this.props.updatedForm(book)
+                  }}>
+                    UPDATE
+                  </Button>
                 </Carousel.Caption>
               </Carousel.Item>
             ))}
