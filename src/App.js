@@ -13,6 +13,7 @@ import LoginButton from './LoginButton'
 import AddBook from './AddBook';
 import axios from 'axios';
 import UpdateBook from './UpdateBook.js'
+import { withAuth0 } from '@auth0/auth0-react';
 
 class App extends React.Component {
   constructor(props) {
@@ -69,7 +70,14 @@ class App extends React.Component {
     // .catch(err => console.log(`Error: ${err.message}`))
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    // let getIdToken = await this.props.auth0.getIdTokenClaims();
+    // let jwt = getIdToken.__raw;
+    // let config = {
+    //   headers: { "Authorization": `Bearer ${jwt}` }
+    // };
+    // axios.get(`${process.env.REACT_APP_SERVER}/allBooks`, config)
+
     axios.get(`${process.env.REACT_APP_SERVER}/allBooks`)
       .then(infoObj => infoObj.data)
       .then(data => this.setState({
@@ -109,6 +117,7 @@ class App extends React.Component {
 
 
   render() {
+    console.log(this.props);
     return (
       <>
         <Router>
@@ -121,7 +130,8 @@ class App extends React.Component {
                 books={this.state.books}
                 updatedForm={this.updatedForm}
               />
-                : <LoginButton loginHandler={this.loginHandler} />
+                : <LoginButton
+                  loginHandler={this.loginHandler} />
               }
             </Route>
             <Route exact path="/profile">
@@ -146,4 +156,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withAuth0(App);
